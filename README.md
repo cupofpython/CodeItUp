@@ -2,7 +2,19 @@
 
 This is a Slack App that leverages the GitLab Code Suggestions API to write code from you from Slack!
 
-## How to use this code
+## New: How this code is configured via AWS Lambda
+
+If you do not want a locally running copy of this server (for good reason! you don't need to keep it up and running :smiley:) you can leverage the AWS Lambda approach.
+
+I personally trigger an AWS Lambda by exposing a function endpoint for a lambda called "SlackLambdaGateway", which triggers the "generateCode" Lambda. The first Lambda sends a successful response back to Slack within 3 s to meet its timing requirements, and the second Lambda takes the event information and parses out the command, generates the code, and sends it back to the same response URL. Breaking this process up into two Lambdas allows for lazy processing that lasts logner than 3 seconds, while working with the constraint of the Lambda terminating upon sending an initial response back to Slack.
+
+![Slack-Lambda Gateway](images/slack-lambda-gateway.png)
+
+[Source for Slack-Lambda Gateway Logic](https://phil-dobson.medium.com/building-a-slack-lambda-gateway-e078aa743352)
+
+This requires a layer for the generateCode Lambda with the requirements for requests uploaded as a zip file.
+
+## How to use this code (local setup)
 
 To set it up locally, check out this project and follow these steps:
 
