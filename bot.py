@@ -18,7 +18,7 @@ def generate():
     t.start()
 
     # Process the command and generate a response
-    response_text = f'Generating code... please wait!'
+    response_text = 'Generating code... please wait!'
 
     # Respond to Slack
     return jsonify({'response_type': 'in_channel', 'text': response_text})
